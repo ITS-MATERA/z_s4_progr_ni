@@ -1,0 +1,66 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+  xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+  <Dialog title="Progressivo NI" >
+    <content>
+      <Panel  visible="{EntityModel>/PanelFilterVisible}" >
+        <l:Grid defaultSpan="XL12 L12 M12 S12" vSpacing="0">            
+            <Label text="Ente:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Input value="{EntityModel>/Bukrs}"  enabled="false" ><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+                        
+            <Label text="Esercizio:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Input value="{EntityModel>/Eserciizo}"  maxLength="4" ><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+           
+            <Label text="Amministrazione:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Input value="{EntityModel>/Amministrazione}"  maxLength="3"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+           
+            <Label text="Ragioneria:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Input value="{EntityModel>/Ragioneria}"  maxLength="4"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+
+            <Label text="Progressivo:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Input value="{EntityModel>/Progessivo}"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+                      
+            <Label text="Identificativo NI:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Input value="{EntityModel>/Identificativo}"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+           
+            <Label text="Progressivo NI:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Input value="{EntityModel>/ZchiaveNi}"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>           
+         </l:Grid>
+      </Panel>
+    <Panel visible="{EntityModel>/PanelContentVisible}">
+      <Table class="sapUxAPObjectPageSubSectionAlignContent"
+        id="_libTableNumero"
+        items="{
+          path: 'EntityModel>/Results'
+        }"
+        mode="SingleSelectMaster"
+        growing="true"
+        width="auto"> 
+        <columns>
+          <Column><Text text="Numero NI" /></Column>
+          <Column><Text text="Progressivo NI" /></Column>
+          <Column><Text text="Oggetto della spesa" /></Column>
+        </columns>
+        <items>
+          <ColumnListItem 
+            app:ZchiaveSubni="{EntityModel>ZchiaveSubni}"
+            app:ZchiaveNi="{EntityModel>ZchiaveNi}"
+            app:ZoggSpesa="{EntityModel>ZoggSpesa}">
+            <Text text="{EntityModel>ZchiaveSubni}" />
+            <Text text="{EntityModel>ZchiaveNi}" />			
+            <Text text="{EntityModel>ZoggSpesa}" />		            						
+          </ColumnListItem>
+        </items>
+      </Table>
+    </Panel>
+    </content>
+    <buttons>
+      <Button text="Chiudi" press="_libOnCloseNumeroDialog" visible="{EntityModel>/PanelFilterVisible}"/>
+      <Button text="Cerca" press="_libOnSearchNumeroDialog" visible="{EntityModel>/PanelFilterVisible}"/>
+      <Button text="Indietro" press="_libOnBackNumeroDialog" visible="{EntityModel>/PanelContentVisible}"/>
+      <Button text="Conferma" press="_libOnConfirmNumeroDialog" visible="{EntityModel>/PanelContentVisible}"/>
+    </buttons>    
+  </Dialog>
+</core:FragmentDefinition>

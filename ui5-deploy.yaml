@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "1.0"
+metadata:
+  name: zs4progrni
+type: library
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        log: 5
+        target:
+          url: http://l2vs2slass01.mef.gov.it:8000
+          client: "100"
+        credentials:
+          username: env:C.VINCENTI
+          password: env:0835Matera!
+        app:
+          name: Z_S4_PROGR_NI
+          description: Matchcode Progressivo NI
+          package: Z_ACN_S4_COSP_FIORI
+          transport: S2SK918451
