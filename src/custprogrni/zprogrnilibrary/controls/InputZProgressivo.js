@@ -24,9 +24,9 @@ sap.ui.define(['jquery.sap.global',
           esercizio: { type: "string", defaultValue: "" },
           amministrazione: { type: "string", defaultValue: "" },
           ragioneria: { type: "string", defaultValue: "" },
+          capitolo: { type: "string", defaultValue: "" },
+          oggettoSpesa: { type: "string", defaultValue: "" },
           value: { type: "string", defaultValue: "" }, // progressivo ZID_NI 
-          identificativo: { type: "string", defaultValue: "" },
-          progressivoNI: { type: "string", defaultValue: "" },
           role: { type: "string", defaultValue: "" },
           fikrs:{ type: "string", defaultValue: "" },
           prctr:{ type: "string", defaultValue: "" },
@@ -47,11 +47,11 @@ sap.ui.define(['jquery.sap.global',
         var self=this;
 				// this.bRendering = false;
 				Input.prototype.init.call(this);  
-        self.attachValueHelpRequest(self._libOnShowDialog);  
-        self.attachSubmit(self._libOnSubmitNumero);  
+        self.attachValueHelpRequest(self._libOnShowProgrDialog);  
+        self.attachSubmit(self._libOnSubmitProgressivo);  
 			},
 
-      _libOnSubmitNumero:function(oEvent){
+      _libOnSubmitProgressivo:function(oEvent){
         var self =this;
         if(!self.getValue() || self.getValue() === null || self.getValue()===""){
           self.setValue(null);
@@ -67,7 +67,7 @@ sap.ui.define(['jquery.sap.global',
         var self =this;
       },
 
-      _libOnShowDialog:function(oEvent){
+      _libOnShowProgrDialog:function(oEvent){
         console.log(oEvent);
         var self =this;
         var oModelJson = new JSONModel({
@@ -77,9 +77,9 @@ sap.ui.define(['jquery.sap.global',
           Esercizio:self.getEsercizio() && self.getEsercizio() !=="" ? self.getEsercizio() : null,
           Amministrazione: self.getAmministrazione() && self.getAmministrazione() !=="" ? self.getAmministrazione() : null,
           Ragioneria:self.getRagioneria() && self.getRagioneria() !=="" ? self.getRagioneria() : null,
+          Capitolo:self.getCapitolo() && self.getCapitolo() !=="" ? self.getCapitolo() : null, 
+          OggettoSpesa:self.getOggettoSpesa() && self.getOggettoSpesa() !=="" ? self.getOggettoSpesa() : null, 
           Progressivo:self.getValue() && self.getValue() !=="" ? self.getValue() : null, 
-          Identificativo:self.getIdentificativo() && self.getIdentificativo() !=="" ? self.getIdentificativo() : null,          
-          ProgressivoNI: self.getProgressivoNI() && self.getProgressivoNI() !=="" ? self.getProgressivoNI() : null,
           Results:[]
         });
 
@@ -130,16 +130,16 @@ sap.ui.define(['jquery.sap.global',
             filters.push(new Filter({path: "Zamministr",operator: FilterOperator.EQ,value1: model.Amministrazione}));  
 
           if(model.Ragioneria && model.Ragioneria !== "")
-            filters.push(new Filter({path: "ZRagioCompe",operator: FilterOperator.Contains,value1: model.Ragioneria}));  
+            filters.push(new Filter({path: "ZRagioCompe",operator: FilterOperator.EQ,value1: model.Ragioneria}));  
 
           if(model.Progressivo && model.Progressivo !== "")
             filters.push(new Filter({path: "ZidNi",operator: FilterOperator.EQ,value1: model.Progressivo}));
           
-          if(model.Identificativo && model.Identificativo !== "")
-            filters.push(new Filter({path: "ZidSubni",operator: FilterOperator.EQ,value1: model.Identificativo}));
+          if(model.Capitolo && model.Capitolo !== "")
+            filters.push(new Filter({path: "Zcapitolo",operator: FilterOperator.EQ,value1: model.Capitolo}));
 
-          if(model.ProgressivoNI && model.ProgressivoNI !== "")
-            filters.push(new Filter({path: "ZchiaveNi",operator: FilterOperator.EQ,value1: model.ProgressivoNI}));
+          if(model.OggettoSpesa && model.OggettoSpesa !== "")
+            filters.push(new Filter({path: "ZoggSpesa",operator: FilterOperator.EQ,value1: model.OggettoSpesa}));
           
           console.log(self._globalModelHelperHelper);
           var oDataModel = self._globalModelHelperHelper;
@@ -149,7 +149,7 @@ sap.ui.define(['jquery.sap.global',
               
             oDialog.setBusy(true);
             self._globalModelHelperHelper.metadataLoaded().then(function() {
-              oDataModel.read("/ZhfNotaimpSet" , {
+              oDataModel.read("/ZhfNotabozzaSet" , {
                   filters: filters,   
                   urlParameters: { 
                     AuthorityRole: self.getRole(),
@@ -178,11 +178,11 @@ sap.ui.define(['jquery.sap.global',
         var self =this;
         self._libGetViewId(self,function(callback) {
           var oView = callback.oView;
-          var table = oView.byId("_libTableNumero");
+          var table = oView.byId("_libTableProgressivo");
           var selectedItem = table.getSelectedItem();
           
-          var key = selectedItem.data("ZchiaveSubni");
-          var text = selectedItem.data("ZchiaveSubni");
+          var key = selectedItem.data("ZchiaveNi");
+          var text = selectedItem.data("ZchiaveNi");
 
           self.setKey(key);  
           self.setValue(text);
