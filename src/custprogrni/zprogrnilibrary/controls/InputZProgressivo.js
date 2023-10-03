@@ -21,18 +21,20 @@ sap.ui.define(['jquery.sap.global',
 						defaultValue: ""
 					},
           bukrs: { type: "string", defaultValue: "" },
-          esercizio: { type: "string", defaultValue: "" },
+          esercizio: { type: "Number", defaultValue: "" },
           amministrazione: { type: "string", defaultValue: "" },
           ragioneria: { type: "string", defaultValue: "" },
           capitolo: { type: "string", defaultValue: "" },
           oggettoSpesa: { type: "string", defaultValue: "" },
+          progressivo: {type:"Number", defaultValue: "" },
           value: { type: "string", defaultValue: "" }, // progressivo ZID_NI 
           role: { type: "string", defaultValue: "" },
           fikrs:{ type: "string", defaultValue: "" },
           prctr:{ type: "string", defaultValue: "" },
           
           key:{ type: "string", defaultValue:"" },
-          showValueHelp:{ type:"string", defaultValue:"true" }
+          showValueHelp:{ type:"string", defaultValue:"true" },
+          maxLength:{ type:"string", defaultValue:"20" }
 				},
 				aggregations: {},
 				events: {},
@@ -68,7 +70,6 @@ sap.ui.define(['jquery.sap.global',
       },
 
       _libOnShowProgrDialog:function(oEvent){
-        console.log(oEvent);
         var self =this;
         var oModelJson = new JSONModel({
           PanelFilterVisible:true,
@@ -79,7 +80,8 @@ sap.ui.define(['jquery.sap.global',
           Ragioneria:self.getRagioneria() && self.getRagioneria() !=="" ? self.getRagioneria() : null,
           Capitolo:self.getCapitolo() && self.getCapitolo() !=="" ? self.getCapitolo() : null, 
           OggettoSpesa:self.getOggettoSpesa() && self.getOggettoSpesa() !=="" ? self.getOggettoSpesa() : null, 
-          Progressivo:self.getValue() && self.getValue() !=="" ? self.getValue() : null, 
+          Progressivo:self.getProgressivo() && self.getProgressivo() !=="" ? self.getProgressivo() : null, 
+          // Progressivo:self.getValue() && self.getValue() !=="" ? self.getValue() : null, 
           Results:[]
         });
 
@@ -139,9 +141,9 @@ sap.ui.define(['jquery.sap.global',
             filters.push(new Filter({path: "Zcapitolo",operator: FilterOperator.EQ,value1: model.Capitolo}));
 
           if(model.OggettoSpesa && model.OggettoSpesa !== "")
-            filters.push(new Filter({path: "ZoggSpesa",operator: FilterOperator.EQ,value1: model.OggettoSpesa}));
+            filters.push(new Filter({path: "ZoggSpesa",operator: FilterOperator.Contains,value1: model.OggettoSpesa.toUpperCase()}));
           
-          console.log(self._globalModelHelperHelper);
+          // console.log(self._globalModelHelperHelper);
           var oDataModel = self._globalModelHelperHelper;
 
           if(self._libProgrDialog){
@@ -157,7 +159,7 @@ sap.ui.define(['jquery.sap.global',
                     AuthorityPrctr: self.getPrctr(),
                   }, 
                   success: function(data, oResponse){
-                    console.log(data);
+                    // console.log(data);
                     entity.setProperty("/Results",data.results);
                     entity.setProperty("/PanelFilterVisible",false);
                     entity.setProperty("/PanelContentVisible",true);

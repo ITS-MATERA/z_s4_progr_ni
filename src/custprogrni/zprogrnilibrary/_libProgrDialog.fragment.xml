@@ -11,7 +11,7 @@
             <Input value="{EntityModel>/Bukrs}"  enabled="false" ><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
                         
             <Label text="Esercizio:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
-            <Input value="{EntityModel>/Esercizio}"  maxLength="4" ><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+            <Input value="{EntityModel>/Esercizio}"  maxLength="4" type="Number"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
            
             <Label text="Amministrazione:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
             <Input value="{EntityModel>/Amministrazione}"  maxLength="3"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
@@ -20,13 +20,13 @@
             <Input value="{EntityModel>/Ragioneria}"  maxLength="4"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
 
             <Label text="Capitolo:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
-            <Input value="{EntityModel>/Capitolo}"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+            <Input value="{EntityModel>/Capitolo}" maxLength="4" ><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
                       
             <Label text="Progressivo:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
-            <Input value="{EntityModel>/Progressivo}"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
+            <Input value="{EntityModel>/Progressivo}" maxLength="2" type="Number"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
            
             <Label text="Oggetto della spesa:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
-            <Input value="{EntityModel>/OggettoSpesa}"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>           
+            <Input value="{EntityModel>/OggettoSpesa}" maxLength="50"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>           
          </l:Grid>
       </Panel>
     <Panel visible="{EntityModel>/PanelContentVisible}">
