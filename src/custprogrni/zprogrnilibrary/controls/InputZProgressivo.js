@@ -31,6 +31,7 @@ sap.ui.define(['jquery.sap.global',
           role: { type: "string", defaultValue: "" },
           fikrs:{ type: "string", defaultValue: "" },
           prctr:{ type: "string", defaultValue: "" },
+          openInDialog:{type:"string", defaultValue:""},
           
           key:{ type: "string", defaultValue:"" },
           showValueHelp:{ type:"string", defaultValue:"true" },
@@ -82,10 +83,10 @@ sap.ui.define(['jquery.sap.global',
           OggettoSpesa:self.getOggettoSpesa() && self.getOggettoSpesa() !=="" ? self.getOggettoSpesa() : null, 
           Progressivo:self.getProgressivo() && self.getProgressivo() !=="" ? self.getProgressivo() : null, 
           // Progressivo:self.getValue() && self.getValue() !=="" ? self.getValue() : null, 
-          Results:[]
+          ResultsProgressivo:[]
         });
 
-        self._libGetViewId(self,function(callback) {
+        self._libGetViewId(self,self.getOpenInDialog(), function(callback) {
           if(!self._libProgrDialog){
             self._libProgrDialog = Fragment.load({
               id: callback.Id,
@@ -143,7 +144,7 @@ sap.ui.define(['jquery.sap.global',
           if(model.OggettoSpesa && model.OggettoSpesa !== "")
             filters.push(new Filter({path: "ZoggSpesa",operator: FilterOperator.Contains,value1: model.OggettoSpesa.toUpperCase()}));
           
-          // console.log(self._globalModelHelperHelper);
+          // console.log(self._globalModelHelperHelper);//TODO:da canc
           var oDataModel = self._globalModelHelperHelper;
 
           if(self._libProgrDialog){
@@ -160,7 +161,7 @@ sap.ui.define(['jquery.sap.global',
                   }, 
                   success: function(data, oResponse){
                     // console.log(data);
-                    entity.setProperty("/Results",data.results);
+                    entity.setProperty("/ResultsProgressivo",data.results);
                     entity.setProperty("/PanelFilterVisible",false);
                     entity.setProperty("/PanelContentVisible",true);
                     oDialog.setBusy(false);
@@ -178,45 +179,87 @@ sap.ui.define(['jquery.sap.global',
 
       _libOnConfirmProgrDialog:function(oEvent){
         var self =this;
-        self._libGetViewId(self,function(callback) {
-          var oView = callback.oView;
-          var table = oView.byId("_libTableProgressivo");
-          var selectedItem = table.getSelectedItem();
-          
-          var key = selectedItem.data("ZchiaveNi");
-          var text = selectedItem.data("ZchiaveNi");
-
-          self.setKey(key);  
-          self.setValue(text);
-          
+        if(self.getOpenInDialog() === 'X'){
           if(self._libProgrDialog){
             self._libProgrDialog.then(function(oDialog){
+              var table = oDialog.getContent()[1].getContent()[0];
+              var selectedItem = table.getSelectedItem();
+              
+              if(selectedItem){
+                var key = selectedItem.data("ZchiaveNi");
+                var text = selectedItem.data("ZchiaveNi");
+                self.setKey(key);  
+                self.setValue(text);
+              }
+              else{
+                self.setKey(null);  
+                self.setValue(null);
+              }
+              // console.log(oDialog);
               oDialog.close();
               oDialog.destroy();
               self._libProgrDialog=null;
             });
           }
-        });
+        }
+        else{
+          self._libGetViewId(self, self.getOpenInDialog(), function(callback) {
+            var oView = callback.oView;
+            var table = oView.byId("_libTableProgressivo");
+            var selectedItem = table.getSelectedItem();
+            
+            if(selectedItem){
+              var key = selectedItem.data("ZchiaveNi");
+              var text = selectedItem.data("ZchiaveNi");  
+              self.setKey(key);  
+              self.setValue(text);
+            }
+            else{
+              self.setKey(null);  
+              self.setValue(null);
+            }
+            
+            if(self._libProgrDialog){
+              self._libProgrDialog.then(function(oDialog){
+                oDialog.close();
+                oDialog.destroy();
+                self._libProgrDialog=null;
+              });
+            }
+          });
+        }
       },
 
       _libOnBackProgrDialog:function(oEvent){
         var self = this,
           entity = oEvent.getSource().getParent().getModel(MODEL_ENTITY);
-        entity.setProperty("/Results",[]);
+        entity.setProperty("/ResultsProgressivo",[]);
         entity.setProperty("/PanelFilterVisible",true);
         entity.setProperty("/PanelContentVisible",false);
       },
 
-      _libGetViewId:function(context,callback){
+      _libGetViewId:function(context, isDialog, callback){
         var self =this;
         while (context && context.getParent) {
           var oParentControl = context.getParent();
-          if (oParentControl instanceof sap.ui.core.mvc.View) {
-            var viewId = oParentControl.getId();
-            var oView = sap.ui.getCore().byId(viewId);
-            // console.log(oView);//TODO:da canc
-            callback({Id : viewId, oView: oView});
-            break;
+          // console.log(oParentControl);
+          if(isDialog === 'X'){
+            if(oParentControl instanceof sap.m.Dialog) {
+              var viewId = oParentControl.getId();
+              var oView = sap.ui.getCore().byId(viewId);
+              // console.log(oView);//TODO:da canc
+              callback({Id : viewId, oView: oView});
+              break;
+            }
+          }
+          else {
+            if(oParentControl instanceof sap.ui.core.mvc.View) {
+              var viewId = oParentControl.getId();
+              var oView = sap.ui.getCore().byId(viewId);
+              // console.log(oView);//TODO:da canc
+              callback({Id : viewId, oView: oView});
+              break;
+            }
           }
           context = oParentControl;
         }

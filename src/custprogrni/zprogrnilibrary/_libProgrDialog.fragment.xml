@@ -33,7 +33,7 @@
       <Table class="sapUxAPObjectPageSubSectionAlignContent"
         id="_libTableProgressivo"
         items="{
-          path: 'EntityModel>/Results'
+          path: 'EntityModel>/ResultsProgressivo'
         }"
         mode="SingleSelectMaster"
         growing="true"
