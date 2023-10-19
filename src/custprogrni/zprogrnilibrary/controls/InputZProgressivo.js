@@ -143,7 +143,7 @@ sap.ui.define(['jquery.sap.global',
             filters.push(new Filter({path: "Zcapitolo",operator: FilterOperator.EQ,value1: model.Capitolo}));
 
           if(model.OggettoSpesa && model.OggettoSpesa !== "")
-            filters.push(new Filter({path: "ZoggSpesa",operator: FilterOperator.Contains,value1: model.OggettoSpesa.toUpperCase()}));
+            filters.push(new Filter({path: "ZoggSpesa",operator: FilterOperator.EQ,value1: model.OggettoSpesa.toUpperCase()}));
           
           // console.log(self._globalModelHelperHelper);//TODO:da canc
           var oDataModel = self._globalModelHelperHelper;

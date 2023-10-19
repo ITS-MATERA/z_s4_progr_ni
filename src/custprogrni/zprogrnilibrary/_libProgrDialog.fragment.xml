@@ -7,25 +7,25 @@
     <content>
       <Panel  visible="{EntityModel>/PanelFilterVisible}" >
         <l:Grid defaultSpan="XL12 L12 M12 S12" vSpacing="0">            
-            <Label text="Ente:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Label text="Ente:" class="sapUiTinyMarginTop"><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
             <Input value="{EntityModel>/Bukrs}"  maxLength="4" enabled="false" ><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
                         
-            <Label text="Esercizio:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Label text="Esercizio:" class="sapUiTinyMarginTop"><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
             <Input value="{EntityModel>/Esercizio}"  maxLength="4" type="Number"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
            
-            <Label text="Amministrazione:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Label text="Amministrazione:" class="sapUiTinyMarginTop"><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
             <Input value="{EntityModel>/Amministrazione}"  maxLength="3"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
            
-            <Label text="Ragioneria:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Label text="Ragioneria:" class="sapUiTinyMarginTop"><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
             <Input value="{EntityModel>/Ragioneria}"  maxLength="4"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
 
-            <Label text="Capitolo:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Label text="Capitolo:" class="sapUiTinyMarginTop"><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
             <Input value="{EntityModel>/Capitolo}" maxLength="4" ><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
                       
-            <Label text="Progressivo:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Label text="Progressivo:" class="sapUiTinyMarginTop"><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
             <Input value="{EntityModel>/Progressivo}" maxLength="2" type="Number"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>
            
-            <Label text="Oggetto della spesa:" ><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
+            <Label text="Oggetto della spesa:" class="sapUiTinyMarginTop"><layoutData><l:GridData span="XL2 L2 M6 S12" /></layoutData></Label>
             <Input value="{EntityModel>/OggettoSpesa}" maxLength="50"><layoutData><l:GridData span="XL10 L10 M6 S12" /></layoutData></Input>           
          </l:Grid>
       </Panel>
